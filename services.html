@@ -1,0 +1,1339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Explore Apex Partners' compliance, audit, taxation, company incorporation, and business advisory services.">
+  <title>Services | Apex Partners Chartered Accountants</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* =============================================
+       SERVICES PAGE — INLINE STYLES
+    ============================================= */
+
+    /* --- Hero Enhancements --- */
+    .subpage-hero {
+      position: relative;
+      overflow: hidden;
+      padding-bottom: 3.5rem;
+    }
+    .hero-breadcrumb {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.55);
+      margin-bottom: 1.2rem;
+      letter-spacing: 0.04em;
+    }
+    .hero-breadcrumb a {
+      color: rgba(255,255,255,0.55);
+      text-decoration: none;
+      transition: color var(--transition-fast);
+    }
+    .hero-breadcrumb a:hover { color: var(--accent); }
+    .hero-breadcrumb svg { width: 13px; height: 13px; }
+
+    .subpage-hero h1 {
+      position: relative;
+      display: inline-block;
+    }
+    .hero-underline {
+      display: block;
+      height: 4px;
+      border-radius: 2px;
+      background: linear-gradient(90deg, var(--accent) 0%, transparent 100%);
+      margin-top: 0.5rem;
+      width: 0;
+      animation: underlineGrow 1s 0.6s cubic-bezier(.4,0,.2,1) forwards;
+    }
+    @keyframes underlineGrow {
+      to { width: 100%; }
+    }
+
+    .hero-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1.8rem;
+      justify-content: center;
+    }
+    .hero-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(200,169,92,0.35);
+      color: #fff;
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 0.45rem 1rem;
+      border-radius: 50px;
+      backdrop-filter: blur(8px);
+      letter-spacing: 0.02em;
+      transition: background var(--transition-fast), border-color var(--transition-fast);
+    }
+    .hero-chip:hover {
+      background: rgba(200,169,92,0.18);
+      border-color: var(--accent);
+    }
+    .hero-chip-check {
+      color: var(--accent);
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+
+    /* --- Services Section --- */
+    .services-section {
+      padding: 5rem 0 4rem;
+      background: var(--bg-light);
+    }
+    .services-section-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    .services-section-header .badge { margin-bottom: 0.8rem; }
+    .services-section-header h2 { margin-bottom: 0.6rem; }
+    .services-section-header p {
+      color: var(--text-medium);
+      max-width: 560px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    /* Bento Grid */
+    .services-bento-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      align-items: start;
+    }
+    @media (max-width: 1024px) {
+      .services-bento-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 640px) {
+      .services-bento-grid { grid-template-columns: 1fr; }
+    }
+
+    /* Service Card */
+    .svc-card {
+      background: #fff;
+      border-radius: var(--border-radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--border-color);
+      transition: transform 0.35s cubic-bezier(.4,0,.2,1),
+                  box-shadow 0.35s cubic-bezier(.4,0,.2,1),
+                  border-color 0.35s;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+    .svc-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), transparent);
+      opacity: 0;
+      transition: opacity 0.35s;
+    }
+    .svc-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 24px 64px rgba(10,25,60,0.16);
+      border-color: rgba(200,169,92,0.3);
+    }
+    .svc-card:hover::before { opacity: 1; }
+
+    /* Card hidden state for filter */
+    .svc-card.hidden {
+      display: none;
+    }
+    .svc-card.fade-out {
+      opacity: 0;
+      transform: scale(0.94);
+      pointer-events: none;
+    }
+    .svc-card.fade-in {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* Card Top — Dark Navy */
+    .svc-card-top {
+      background: linear-gradient(135deg, var(--primary) 0%, #0f3460 100%);
+      padding: 2rem 1.8rem 1.6rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .svc-card-top::after {
+      content: '';
+      position: absolute;
+      top: -40px; right: -40px;
+      width: 130px; height: 130px;
+      border-radius: 50%;
+      background: rgba(200,169,92,0.07);
+      pointer-events: none;
+    }
+    .svc-icon-circle {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), #e0c060);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 6px 20px rgba(200,169,92,0.4);
+      margin-bottom: 1.2rem;
+    }
+    .svc-icon-circle svg {
+      width: 28px;
+      height: 28px;
+      stroke: #fff;
+    }
+    .svc-cat-tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: rgba(200,169,92,0.15);
+      border: 1px solid rgba(200,169,92,0.3);
+      padding: 0.18rem 0.65rem;
+      border-radius: 50px;
+      margin-bottom: 0.6rem;
+    }
+    .svc-card-top h3 {
+      color: #fff;
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin: 0;
+      line-height: 1.3;
+    }
+
+    /* Card Bottom — Light */
+    .svc-card-bottom {
+      padding: 1.6rem 1.8rem 1.8rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .svc-card-bottom p {
+      color: var(--text-medium);
+      font-size: 0.88rem;
+      line-height: 1.7;
+      margin-bottom: 1.2rem;
+    }
+    .svc-features {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+    .svc-features li {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.83rem;
+      color: var(--text-dark);
+      font-weight: 500;
+    }
+    .svc-features li::before {
+      content: '';
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+    .svc-cta {
+      margin-top: auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.87rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-decoration: none;
+      border-top: 1px solid var(--border-color);
+      padding-top: 1.1rem;
+      transition: gap var(--transition-fast), color var(--transition-fast);
+      letter-spacing: 0.01em;
+    }
+    .svc-cta svg {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      transition: transform var(--transition-fast);
+    }
+    .svc-cta:hover {
+      color: var(--accent);
+      gap: 0.7rem;
+    }
+    .svc-cta:hover svg { transform: translateX(4px); }
+
+
+    /* =============================================
+       PROCESS TIMELINE SECTION
+    ============================================= */
+    .process-section {
+      padding: 5rem 0;
+      background: var(--bg-white);
+      position: relative;
+      overflow: hidden;
+    }
+    .process-section::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: radial-gradient(ellipse at 60% 50%, rgba(10,25,60,0.03) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .process-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+    .process-timeline {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      position: relative;
+    }
+    @media (max-width: 900px) {
+      .process-timeline {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2.5rem 1.5rem;
+      }
+      .process-connector { display: none; }
+    }
+    @media (max-width: 560px) {
+      .process-timeline {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+    }
+
+    /* Dashed connector line */
+    .process-track {
+      position: absolute;
+      top: 38px;
+      left: calc(12.5% + 20px);
+      right: calc(12.5% + 20px);
+      height: 2px;
+      background: repeating-linear-gradient(
+        90deg,
+        var(--accent) 0,
+        var(--accent) 10px,
+        transparent 10px,
+        transparent 22px
+      );
+      opacity: 0.45;
+      pointer-events: none;
+      z-index: 0;
+    }
+    @media (max-width: 900px) {
+      .process-track { display: none; }
+    }
+
+    .process-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 0 1rem;
+      position: relative;
+      z-index: 1;
+    }
+    .process-number {
+      width: 76px;
+      height: 76px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent) 0%, #c8a95c 100%);
+      color: #fff;
+      font-size: 1.6rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 28px rgba(200,169,92,0.38);
+      margin-bottom: 1.4rem;
+      position: relative;
+      font-family: 'Outfit', sans-serif;
+      flex-shrink: 0;
+    }
+    .process-number::after {
+      content: '';
+      position: absolute;
+      inset: -5px;
+      border-radius: 50%;
+      border: 2px dashed rgba(200,169,92,0.35);
+    }
+    .process-step h4 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 0.5rem;
+    }
+    .process-step p {
+      font-size: 0.83rem;
+      color: var(--text-medium);
+      line-height: 1.65;
+      max-width: 190px;
+      margin: 0 auto;
+    }
+    .process-step-icon {
+      width: 32px;
+      height: 32px;
+      margin-bottom: 0.8rem;
+      color: var(--accent);
+      position: absolute;
+      bottom: calc(100% + 0.3rem);
+      left: 50%;
+      transform: translateX(-50%);
+      display: none;
+    }
+
+    /* =============================================
+       INDUSTRIES SECTION
+    ============================================= */
+    .industries-section {
+      padding: 5.5rem 0;
+      background: linear-gradient(135deg, #0a1940 0%, #0f2760 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .industries-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 20% 80%, rgba(200,169,92,0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 20%, rgba(200,169,92,0.06) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    /* Decorative circles */
+    .industries-section::after {
+      content: '';
+      position: absolute;
+      width: 500px; height: 500px;
+      border-radius: 50%;
+      border: 1px solid rgba(200,169,92,0.07);
+      top: -150px; right: -150px;
+      pointer-events: none;
+    }
+
+    .industries-header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+    .industries-header h2 { color: #fff; }
+    .industries-header p { color: rgba(255,255,255,0.65); max-width: 520px; margin: 0 auto; }
+
+    .industries-premium-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    @media (max-width: 900px) {
+      .industries-premium-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 560px) {
+      .industries-premium-grid { grid-template-columns: 1fr; }
+    }
+
+    .industry-premium-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--border-radius-lg);
+      padding: 2rem 1.8rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      transition: transform 0.35s, background 0.35s, border-color 0.35s, box-shadow 0.35s;
+      cursor: default;
+      position: relative;
+      overflow: hidden;
+    }
+    .industry-premium-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), transparent);
+      opacity: 0;
+      transition: opacity 0.35s;
+    }
+    .industry-premium-card:hover {
+      background: rgba(255,255,255,0.09);
+      border-color: rgba(200,169,92,0.3);
+      transform: translateY(-6px);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+    }
+    .industry-premium-card:hover::before { opacity: 1; }
+
+    .industry-icon-wrap {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(200,169,92,0.2), rgba(200,169,92,0.08));
+      border: 1px solid rgba(200,169,92,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .industry-icon-wrap svg {
+      width: 24px;
+      height: 24px;
+      stroke: var(--accent);
+    }
+    .industry-premium-card h4 {
+      color: #fff;
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin: 0;
+    }
+    .industry-premium-card p {
+      color: rgba(255,255,255,0.6);
+      font-size: 0.84rem;
+      line-height: 1.65;
+      margin: 0;
+    }
+
+    /* =============================================
+       CTA BANNER
+    ============================================= */
+    .cta-banner {
+      background: linear-gradient(120deg, #0a1940 0%, #142456 60%, #0f3460 100%);
+      padding: 5rem 0;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+    .cta-banner::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 30% 50%, rgba(200,169,92,0.1) 0%, transparent 55%),
+        radial-gradient(ellipse at 70% 50%, rgba(200,169,92,0.07) 0%, transparent 55%);
+      pointer-events: none;
+    }
+    /* Decorative gold rings */
+    .cta-ring-1 {
+      position: absolute;
+      width: 400px; height: 400px;
+      border-radius: 50%;
+      border: 1px solid rgba(200,169,92,0.1);
+      top: 50%; left: 10%;
+      transform: translateY(-50%);
+      pointer-events: none;
+    }
+    .cta-ring-2 {
+      position: absolute;
+      width: 300px; height: 300px;
+      border-radius: 50%;
+      border: 1px solid rgba(200,169,92,0.08);
+      top: 50%; right: 10%;
+      transform: translateY(-50%);
+      pointer-events: none;
+    }
+    .cta-banner-inner {
+      position: relative;
+      z-index: 1;
+    }
+    .cta-banner-badge {
+      display: inline-block;
+      background: rgba(200,169,92,0.15);
+      border: 1px solid rgba(200,169,92,0.35);
+      color: var(--accent);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.35rem 1rem;
+      border-radius: 50px;
+      margin-bottom: 1.5rem;
+    }
+    .cta-banner h2 {
+      color: #fff;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+      max-width: 640px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .cta-banner h2 span {
+      background: linear-gradient(135deg, var(--accent), #e0c060);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .cta-banner p {
+      color: rgba(255,255,255,0.65);
+      font-size: 1rem;
+      max-width: 480px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.7;
+    }
+    .cta-banner-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn-cta-light {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.85rem 2rem;
+      border-radius: 50px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      font-family: inherit;
+      background: rgba(255,255,255,0.08);
+      border: 1.5px solid rgba(255,255,255,0.25);
+      color: #fff;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all var(--transition-normal);
+      letter-spacing: 0.02em;
+    }
+    .btn-cta-light:hover {
+      background: rgba(255,255,255,0.14);
+      border-color: rgba(255,255,255,0.5);
+      transform: translateY(-2px);
+    }
+    .btn-cta-gold {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.85rem 2rem;
+      border-radius: 50px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      font-family: inherit;
+      background: linear-gradient(135deg, var(--accent), #c8a040);
+      border: none;
+      color: #fff;
+      text-decoration: none;
+      cursor: pointer;
+      box-shadow: 0 6px 24px rgba(200,169,92,0.4);
+      transition: all var(--transition-normal);
+      letter-spacing: 0.02em;
+    }
+    .btn-cta-gold:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 36px rgba(200,169,92,0.5);
+    }
+
+    /* =============================================
+       STATS ROW (bonus section below filter bar)
+    ============================================= */
+    .stats-strip {
+      background: var(--primary);
+      padding: 1.4rem 0;
+      overflow: hidden;
+    }
+    .stats-strip-inner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      flex-wrap: wrap;
+    }
+    .stat-pill {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      padding: 0.5rem 2.2rem;
+      border-right: 1px solid rgba(255,255,255,0.12);
+    }
+    .stat-pill:last-child { border-right: none; }
+    .stat-pill-num {
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: var(--accent);
+      font-family: 'Outfit', sans-serif;
+      line-height: 1;
+    }
+    .stat-pill-label {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.7);
+      font-weight: 500;
+      line-height: 1.3;
+    }
+
+    /* =============================================
+       REVEAL TRANSITIONS
+    ============================================= */
+    .svc-card {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.5s ease, transform 0.5s ease, box-shadow 0.35s, border-color 0.35s;
+    }
+    .svc-card.revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    /* delay chain */
+    .svc-card:nth-child(1) { transition-delay: 0.05s; }
+    .svc-card:nth-child(2) { transition-delay: 0.12s; }
+    .svc-card:nth-child(3) { transition-delay: 0.19s; }
+    .svc-card:nth-child(4) { transition-delay: 0.26s; }
+    .svc-card:nth-child(5) { transition-delay: 0.33s; }
+    .svc-card:nth-child(6) { transition-delay: 0.40s; }
+    .svc-card:nth-child(7) { transition-delay: 0.47s; }
+    .svc-card:nth-child(8) { transition-delay: 0.54s; }
+
+    /* Smooth grid height transitions when filtering */
+    .services-bento-grid {
+      transition: min-height 0.3s ease;
+    }
+  </style>
+</head>
+<body>
+  <!-- --- PAGE PRELOADER --- -->
+  <div id="page-loader" class="page-loader">
+    <div class="newtons-cradle">
+      <div class="newtons-cradle__dot"></div>
+      <div class="newtons-cradle__dot"></div>
+      <div class="newtons-cradle__dot"></div>
+      <div class="newtons-cradle__dot"></div>
+    </div>
+  </div>
+
+  <!-- --- HEADER / NAVIGATION --- -->
+  <header class="header" id="header">
+    <div class="container nav-container">
+      <a href="index.html" class="logo" id="logo-link">
+        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="40" height="40" rx="8" fill="var(--primary)" />
+          <path d="M10 28V12L15 17L20 12L25 17L30 12V28" stroke="var(--accent)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" />
+          <circle cx="20" cy="27" r="2.5" fill="var(--accent)" />
+        </svg>
+        <span>
+          <strong>APEX PARTNERS</strong>
+          <small>CHARTERED ACCOUNTANTS</small>
+        </span>
+      </a>
+
+      <nav class="nav-menu" id="nav-menu">
+        <a href="index.html" class="nav-link" id="link-home">Home</a>
+        <a href="about.html" class="nav-link" id="link-about">About Us</a>
+        <a href="services.html" class="nav-link active" id="link-services">Services</a>
+        <a href="calculators.html" class="nav-link" id="link-resources">Calculators</a>
+        <a href="contact.html" class="nav-link" id="link-contact">Contact Us</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="booking.html" class="btn btn-primary" id="desktop-cta-btn">Book Consultation</a>
+      </div>
+      
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle Navigation">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- =============================================
+       SUBPAGE HERO
+  ============================================= -->
+  <section class="subpage-hero">
+    <div class="container">
+      <!-- Breadcrumb -->
+      <nav class="hero-breadcrumb reveal reveal-up" aria-label="breadcrumb">
+        <a href="index.html">Home</a>
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+        </svg>
+        <span style="color: var(--accent);">Services</span>
+      </nav>
+
+      <div class="reveal reveal-up delay-1" style="display: flex; justify-content: center; margin-bottom: 1.2rem;">
+        <span class="badge" style="margin-bottom: 0;">Professional Portfolios</span>
+      </div>
+
+      <!-- Headline with animated gold underline -->
+      <h1 class="reveal reveal-up delay-1">
+        Our Chartered Accountant Services
+        <span class="hero-underline" aria-hidden="true"></span>
+      </h1>
+
+      <p class="reveal reveal-up delay-2">
+        Helping your enterprise stay compliant, minimize tax risks, and accelerate structural growth with expert financial guidance at every step.
+      </p>
+
+      <!-- Highlight chips -->
+      <div class="hero-chips reveal reveal-up delay-3">
+        <div class="hero-chip"><span class="hero-chip-check">✓</span> Tax Compliant</div>
+        <div class="hero-chip"><span class="hero-chip-check">✓</span> Audit Ready</div>
+        <div class="hero-chip"><span class="hero-chip-check">✓</span> GST Certified</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       STATS STRIP
+  ============================================= -->
+  <div class="stats-strip">
+    <div class="container">
+      <div class="stats-strip-inner">
+        <div class="stat-pill">
+          <span class="stat-pill-num">500+</span>
+          <span class="stat-pill-label">Clients<br>Served</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-pill-num">15+</span>
+          <span class="stat-pill-label">Years of<br>Experience</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-pill-num">8</span>
+          <span class="stat-pill-label">Core<br>Services</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-pill-num">100%</span>
+          <span class="stat-pill-label">Compliance<br>Record</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- =============================================
+       SERVICES GRID
+  ============================================= -->
+  <section class="services-section">
+    <div class="container">
+      <div class="services-section-header reveal reveal-up">
+        <span class="badge">What We Offer</span>
+        <h2>Expert Financial Services</h2>
+        <p>End-to-end compliance, taxation, and advisory services tailored to businesses of all sizes.</p>
+      </div>
+
+      <div class="services-bento-grid" id="servicesGrid">
+
+        <!-- ---- SERVICE 1: Income Tax Filing (cat: tax) ---- -->
+        <div class="svc-card" data-category="tax" id="svc-1">
+          <div class="svc-card-top">
+            <div class="svc-icon-circle">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+              </svg>
+            </div>
+            <span class="svc-cat-tag">Tax</span>
+            <h3>Income Tax Filing</h3>
+          </div>
+          <div class="svc-card-bottom">
+            <p>Optimize personal or corporate tax structures, organize standard deductions, and submit returns (ITR 1 to ITR 7) securely with direct tax compliance auditing.</p>
+            <ul class="svc-features">
+              <li>ITR preparation for all categories</li>
+              <li>Tax-saving investment planning</li>
+              <li>Notice response & assessment support</li>
+            </ul>
+            <a href="booking.html?service=tax" class="svc-cta">
+              Schedule Consult
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- ---- SERVICE 2: GST Registration & Returns (cat: gst) ---- -->
+        <div class="svc-card" data-category="gst" id="svc-2">
+          <div class="svc-card-top">
+            <div class="svc-icon-circle">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/>
+              </svg>
+            </div>
+            <span class="svc-cat-tag">GST</span>
+            <h3>GST Registration &amp; Returns</h3>
+          </div>
+          <div class="svc-card-bottom">
+            <p>Obtain GST registrations, handle monthly/quarterly returns filing (GSTR-1, GSTR-3B, GSTR-9), compile Input Tax Credit audits, and represent you in department disputes.</p>
+            <ul class="svc-features">
+              <li>GSTR-1, 3B, 9 &amp; 9C filing</li>
+              <li>ITC reconciliation &amp; optimization</li>
+              <li>GST departmental representation</li>
+            </ul>
+            <a href="booking.html?service=gst" class="svc-cta">
+              Schedule Consult
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- ---- SERVICE 3: Company Incorporation (cat: corporate) ---- -->
+        <div class="svc-card" data-category="corporate" id="svc-3">
+          <div class="svc-card-top">
+            <div class="svc-icon-circle">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+              </svg>
+            </div>
+            <span class="svc-cat-tag">Corporate</span>
+            <h3>Company Incorporation</h3>
+          </div>
+          <div class="svc-card-bottom">
+            <p>Register Private Limited Companies, OPC, LLP, or Partnership firms with full PAN, TAN, and DSC compliance from day one.</p>
+            <ul class="svc-features">
+              <li>Pvt Ltd, LLP, OPC &amp; partnership setup</li>
+              <li>PAN, TAN &amp; DSC registration</li>
+              <li>MOA/AOA &amp; shareholder agreements</li>
+            </ul>
+            <a href="booking.html?service=incorporation" class="svc-cta">
+              Schedule Consult
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- ---- SERVICE 4: Audit & Assurance (cat: audit) ---- -->
+        <div class="svc-card" data-category="audit" id="svc-4">
+          <div class="svc-card-top">
+            <div class="svc-icon-circle">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+              </svg>
+            </div>
+            <span class="svc-cat-tag">Audit</span>
+            <h3>Audit &amp; Assurance</h3>
+          </div>
+          <div class="svc-card-bottom">
+            <p>Conform with corporate governance using statutory financial audits, internal risk evaluations, tax audits (44AB), and comprehensive accounting process assurances.</p>
+            <ul class="svc-features">
+              <li>Statutory &amp; internal audit</li>
+              <li>Tax audit under Section 44AB</li>
+              <li>Risk assessment &amp; internal controls</li>
+            </ul>
+            <a href="booking.html?service=audit" class="svc-cta">
+              Schedule Consult
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- ---- SERVICE 5: Accounting & Bookkeeping (cat: advisory) ---- -->
+        <div class="svc-card" data-category="advisory" id="svc-5">
+          <div class="svc-card-top">
+            <div class="svc-icon-circle">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+            </div>
+            <span class="svc-cat-tag">Advisory</span>
+            <h3>Accounting &amp; Bookkeeping</h3>
+          </div>
+          <div class="svc-card-bottom">
+            <p>Outsource daily accounts processing, invoice management, monthly MIS reporting, bank reconciliations, and annual balance sheet formulations seamlessly.</p>
+            <ul class="svc-features">
+              <li>Daily &amp; monthly bookkeeping</li>
+              <li>MIS reports &amp; cash flow statements</li>
+              <li>Bank reconciliation &amp; P&amp;L preparation</li>
+            </ul>
+            <a href="booking.html?service=accounting" class="svc-cta">
+              Schedule Consult
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- ---- SERVICE 6: TDS Compliance (cat: tax) ---- -->
+        <div class="svc-card" data-category="tax" id="svc-6">
+          <div class="svc-card-top">
+            <div class="svc-icon-circle">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+              </svg>
+            </div>
+            <span class="svc-cat-tag">Tax</span>
+            <h3>TDS Compliance</h3>
+          </div>
+          <div class="svc-card-bottom">
+            <p>Ensure systematic withholding tax filings, monthly TDS deposit validations, quarterly returns preparation (Form 24Q, 26Q), and seamless Form 16/16A generations.</p>
+            <ul class="svc-features">
+              <li>Form 24Q, 26Q &amp; 27Q returns</li>
+              <li>Form 16 / 16A generation</li>
+              <li>Lower deduction certificate (197)</li>
+            </ul>
+            <a href="booking.html?service=tds" class="svc-cta">
+              Schedule Consult
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- ---- SERVICE 7: Business Advisory (cat: advisory) ---- -->
+        <div class="svc-card" data-category="advisory" id="svc-7">
+          <div class="svc-card-top">
+            <div class="svc-icon-circle">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+              </svg>
+            </div>
+            <span class="svc-cat-tag">Advisory</span>
+            <h3>Business Advisory</h3>
+          </div>
+          <div class="svc-card-bottom">
+            <p>Get expert consulting on capital structuring, strategic valuations, mergers &amp; acquisitions support, cash flow analysis, and project reports for bank funding.</p>
+            <ul class="svc-features">
+              <li>Capital structuring &amp; valuation</li>
+              <li>M&amp;A due diligence support</li>
+              <li>Project reports for bank loans</li>
+            </ul>
+            <a href="booking.html?service=advisory" class="svc-cta">
+              Schedule Consult
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- ---- SERVICE 8: ROC Compliance (cat: corporate) ---- -->
+        <div class="svc-card" data-category="corporate" id="svc-8">
+          <div class="svc-card-top">
+            <div class="svc-icon-circle">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+              </svg>
+            </div>
+            <span class="svc-cat-tag">Corporate</span>
+            <h3>ROC Compliance</h3>
+          </div>
+          <div class="svc-card-bottom">
+            <p>Fulfill Ministry of Corporate Affairs requirements by filing Annual Returns (MGT-7) and financial statements (AOC-4) with comprehensive ROC registry maintenance.</p>
+            <ul class="svc-features">
+              <li>MGT-7 &amp; AOC-4 filing</li>
+              <li>DIN KYC &amp; director changes</li>
+              <li>Charge creation &amp; satisfaction</li>
+            </ul>
+            <a href="booking.html?service=roc" class="svc-cta">
+              Schedule Consult
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       PROCESS TIMELINE
+  ============================================= -->
+  <section class="process-section">
+    <div class="container">
+      <div class="process-header reveal reveal-up">
+        <span class="badge">How It Works</span>
+        <h2>Our Simple 4-Step Process</h2>
+        <p style="color:var(--text-medium);max-width:500px;margin:0.5rem auto 0;line-height:1.7;">
+          From first contact to final delivery — we make every step transparent and effortless.
+        </p>
+      </div>
+
+      <div class="process-timeline">
+        <!-- dashed connector line (desktop only) -->
+        <div class="process-track" aria-hidden="true"></div>
+
+        <!-- Step 1 -->
+        <div class="process-step reveal reveal-up delay-1">
+          <div class="process-number">1</div>
+          <h4>Consultation</h4>
+          <p>Free initial meeting to understand your needs, goals, and compliance requirements.</p>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="process-step reveal reveal-up delay-2">
+          <div class="process-number">2</div>
+          <h4>Document Collection</h4>
+          <p>We provide a precise checklist and securely collect all necessary documents via our portal.</p>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="process-step reveal reveal-up delay-3">
+          <div class="process-number">3</div>
+          <h4>Processing &amp; Filing</h4>
+          <p>Our experts prepare, review, and submit filings with zero errors and full compliance.</p>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="process-step reveal reveal-up delay-4">
+          <div class="process-number">4</div>
+          <h4>Delivery &amp; Follow-up</h4>
+          <p>Acknowledgements, reports, and proactive alerts for upcoming deadlines sent directly to you.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       INDUSTRIES SECTION
+  ============================================= -->
+  <section class="industries-section" id="industries">
+    <div class="container" style="position:relative;z-index:1;">
+      <div class="industries-header reveal reveal-up">
+        <span class="badge" style="background:rgba(200,169,92,0.15);border:1px solid rgba(200,169,92,0.35);color:var(--accent);">Tailored Solutions</span>
+        <h2>Industries We Serve</h2>
+        <p>Specialized accounting and compliance services aligned perfectly with diverse operational domains.</p>
+      </div>
+
+      <div class="industries-premium-grid">
+
+        <!-- Startups -->
+        <div class="industry-premium-card reveal reveal-up delay-1">
+          <div class="industry-icon-wrap">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+            </svg>
+          </div>
+          <h4>Startups</h4>
+          <p>Valuations, equity structure, funding round advisory, MCA set-up, DPIIT recognition, and ESOP compliance from day zero.</p>
+        </div>
+
+        <!-- SMEs -->
+        <div class="industry-premium-card reveal reveal-up delay-2">
+          <div class="industry-icon-wrap">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+            </svg>
+          </div>
+          <h4>SMEs &amp; MSMEs</h4>
+          <p>GST returns management, statutory audits, Udyam registration, growth advisory and working capital optimization.</p>
+        </div>
+
+        <!-- Manufacturing -->
+        <div class="industry-premium-card reveal reveal-up delay-3">
+          <div class="industry-icon-wrap">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 9.172V5L8 4z"/>
+            </svg>
+          </div>
+          <h4>Manufacturing</h4>
+          <p>Cost audits, inventory valuation, depreciation schedules, excise duty mapping, and plant &amp; machinery register maintenance.</p>
+        </div>
+
+        <!-- Retail -->
+        <div class="industry-premium-card reveal reveal-up delay-1">
+          <div class="industry-icon-wrap">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+            </svg>
+          </div>
+          <h4>Retail &amp; E-commerce</h4>
+          <p>Daily cash flow management, POS reconciliation, local taxes, marketplace GST compliance, and inventory controls.</p>
+        </div>
+
+        <!-- IT & Software -->
+        <div class="industry-premium-card reveal reveal-up delay-2">
+          <div class="industry-icon-wrap">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+            </svg>
+          </div>
+          <h4>IT &amp; Software</h4>
+          <p>Transfer pricing, SEZ compliance, GST refund claims, stock option taxation, and cross-border payment compliance.</p>
+        </div>
+
+        <!-- Professionals & Freelancers -->
+        <div class="industry-premium-card reveal reveal-up delay-3">
+          <div class="industry-icon-wrap">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+            </svg>
+          </div>
+          <h4>Professionals &amp; Freelancers</h4>
+          <p>Presumptive tax schemes, 44ADA optimization, professional tax, and foreign remittance compliance for consultants.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       CTA BANNER
+  ============================================= -->
+  <section class="cta-banner">
+    <div class="cta-ring-1" aria-hidden="true"></div>
+    <div class="cta-ring-2" aria-hidden="true"></div>
+    <div class="container cta-banner-inner">
+      <div class="reveal reveal-up">
+        <div class="cta-banner-badge">Ready to Begin?</div>
+        <h2>Start Your <span>Compliance Journey</span> Today</h2>
+        <p>Join 500+ businesses who trust Apex Partners for end-to-end financial management and compliance excellence.</p>
+        <div class="cta-banner-actions">
+          <a href="booking.html" class="btn-cta-gold">
+            <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+            </svg>
+            Book Consultation
+          </a>
+          <a href="contact.html" class="btn-cta-light">
+            <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+            </svg>
+            Talk to an Expert
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- --- FOOTER --- -->
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div class="footer-col">
+        <a href="index.html" class="logo" style="margin-bottom: 1.5rem;" id="footer-logo-link">
+          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="40" height="40" rx="8" fill="var(--bg-white)" />
+            <path d="M10 28V12L15 17L20 12L25 17L30 12V28" stroke="var(--primary)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" />
+            <circle cx="20" cy="27" r="2.5" fill="var(--accent)" />
+          </svg>
+          <span style="color: var(--text-light)">
+            <strong>APEX PARTNERS</strong>
+            <small>CHARTERED ACCOUNTANTS</small>
+          </span>
+        </a>
+        <p>Providing structural bookkeeping, tax compliance planning, company audit audits, and high-quality business consultation since 2011.</p>
+        <div class="footer-socials">
+          <a href="#" class="footer-social-btn" aria-label="LinkedIn">
+            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+          </a>
+          <a href="#" class="footer-social-btn" aria-label="Twitter">
+            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.7 0-1.37-.2-1.95-.53v.05c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.52 8.52 0 0 1-5.3 1.83 8.4 8.4 0 0 1-1-.06A12.08 12.08 0 0 0 8.29 20c7.55 0 11.68-6.26 11.68-11.68 0-.18 0-.35-.01-.53.8-.58 1.5-1.3 2.05-2.12H22.46z"/></svg>
+          </a>
+        </div>
+      </div>
+      
+      <div class="footer-col">
+        <h4>Our Services</h4>
+        <div class="footer-links">
+          <a href="services.html">Income Tax Filing</a>
+          <a href="services.html">GST Advisory</a>
+          <a href="services.html">Company Setup</a>
+          <a href="services.html">Statutory Audit</a>
+          <a href="services.html">Day-to-day Bookkeeping</a>
+          <a href="services.html">TDS &amp; ROC Filings</a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <div class="footer-links">
+          <a href="index.html">Home</a>
+          <a href="about.html">About Our Firm</a>
+          <a href="calculators.html">Tax slab Calculators</a>
+          <a href="booking.html">Book Appointment</a>
+          <a href="contact.html">Contact details</a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Subscribe to Newsletter</h4>
+        <p>Get instant circulars on direct taxes and GST notifications directly in your inbox.</p>
+        <form class="footer-newsletter-form" onsubmit="return false;" id="newsletter-form">
+          <input type="email" class="footer-newsletter-input" placeholder="Your Email Address" required id="newsletter-email">
+          <button type="submit" class="footer-newsletter-btn" id="newsletter-btn">Join</button>
+        </form>
+      </div>
+    </div>
+    
+    <div class="container footer-bottom">
+      <p>&copy; 2026 Apex Partners. All Rights Reserved. Designed for compliance &amp; integrity.</p>
+      <div class="footer-legal-links">
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
+        <a href="disclaimer.html">Disclaimer</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- --- WHATSAPP CHAT FLOAT BUTTON --- -->
+  <a href="https://wa.me/919876543210" class="whatsapp-float" target="_blank" aria-label="Chat on WhatsApp" id="whatsapp-btn">
+    <svg viewBox="0 0 24 24" fill="currentColor">
+      <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.731-1.456L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.42 9.864-9.864.002-2.637-1.03-5.114-2.905-6.99C16.258 1.875 13.784 1.84c-5.437 0-9.862 4.42-9.866 9.863-.001 1.702.463 3.361 1.34 4.8l-.996 3.633 3.72-.975zm13.123-7.042c-.302-.15-1.78-.879-2.056-.979-.275-.1-.476-.15-.676.15-.2.3-.777.979-.952 1.179-.175.2-.35.225-.652.075-.302-.15-1.276-.47-2.43-1.499-.898-.8-1.503-1.79-1.679-2.09-.175-.3-.019-.462.13-.611.135-.135.302-.35.454-.525.151-.175.202-.3.302-.5.1-.2.05-.375-.025-.525-.075-.15-.676-1.628-.926-2.228-.243-.584-.489-.505-.676-.515-.175-.01-.375-.01-.575-.01-.2 0-.526.075-.802.375-.275.3-1.053 1.028-1.053 2.507s1.077 2.903 1.227 3.102c.15.2 2.119 3.235 5.132 4.532.716.309 1.275.493 1.71.632.72.228 1.375.196 1.893.118.577-.087 1.78-.727 2.03-1.428.25-.7.25-1.3.175-1.428-.075-.125-.275-.2-.577-.35z"/>
+    </svg>
+  </a>
+
+  <!-- =============================================
+       PAGE-SPECIFIC JAVASCRIPT
+  ============================================= -->
+  <script>
+    /* -----------------------------------------------
+       1. SERVICES SCROLL REVEAL
+    ----------------------------------------------- */
+    (function () {
+      const grid = document.getElementById('servicesGrid');
+      const cards = grid ? Array.from(grid.querySelectorAll('.svc-card')) : [];
+
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('revealed');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+
+      cards.forEach(card => io.observe(card));
+    })();
+
+    /* -----------------------------------------------
+       3. PROCESS STEPS REVEAL (stagger)
+    ----------------------------------------------- */
+    (function () {
+      const steps = document.querySelectorAll('.process-step');
+      const stepIO = new IntersectionObserver((entries) => {
+        entries.forEach((entry, i) => {
+          if (entry.isIntersecting) {
+            setTimeout(() => {
+              entry.target.style.opacity = '1';
+              entry.target.style.transform = 'translateY(0)';
+            }, i * 120);
+            stepIO.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.2 });
+
+      steps.forEach(step => {
+        step.style.opacity = '0';
+        step.style.transform = 'translateY(24px)';
+        step.style.transition = 'opacity 0.55s ease, transform 0.55s ease';
+        stepIO.observe(step);
+      });
+    })();
+  </script>
+
+  <script src="app.js"></script>
+</body>
+</html>

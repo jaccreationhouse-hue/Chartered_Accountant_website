@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Schedule a live consultation with Apex Partners. Choose your slot and book video or in-person meetings.">
+  <title>Book a Consultation | Apex Partners Chartered Accountants</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Dedicated True Full Screen Page Layout */
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-white);
+      min-height: 100vh;
+      overflow: hidden; /* Prevent body scrolling on desktop */
+      font-family: var(--font-body);
+    }
+    
+    .fullscreen-booking-container {
+      width: 100vw;
+      height: 100vh;
+      max-width: 100vw;
+      max-height: 100vh;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      position: relative;
+    }
+    
+    .booking-card {
+      max-width: 100% !important;
+      width: 100% !important;
+      height: 100vh !important;
+      min-height: 100vh !important;
+      border: none !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+      margin: 0 !important;
+      display: grid !important;
+      grid-template-columns: 380px 1fr !important;
+      overflow: hidden !important;
+    }
+    
+    .booking-sidebar {
+      height: 100vh !important;
+      padding: 4rem 3rem !important;
+      display: flex !important;
+      flex-direction: column !important;
+      justify-content: space-between !important;
+      box-sizing: border-box !important;
+      border-right: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    
+    .booking-content {
+      height: 100vh !important;
+      overflow-y: auto !important;
+      padding: 5rem 4rem 3rem 4rem !important;
+      box-sizing: border-box !important;
+      position: relative !important;
+      background-color: var(--bg-white);
+    }
+    
+    .back-home-btn {
+      position: absolute;
+      top: 2rem;
+      right: 3rem;
+      color: var(--text-medium);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      padding: 0.55rem 1.1rem;
+      border-radius: var(--border-radius-sm);
+      border: 1px solid var(--border-color);
+      background-color: var(--bg-white);
+      transition: all var(--transition-fast);
+      text-decoration: none;
+      font-family: var(--font-heading);
+      z-index: 10;
+    }
+    
+    .back-home-btn:hover {
+      color: var(--accent-hover);
+      border-color: var(--accent);
+      background-color: var(--accent-light);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-sm);
+    }
+    
+    /* Service Picker 2-Column Grid on Desktop */
+    .booking-services-picker {
+      display: grid !important;
+      grid-template-columns: repeat(2, 1fr) !important;
+      gap: 1rem !important;
+    }
+    
+    .booking-service-option {
+      padding: 1rem 1.25rem !important;
+    }
+    
+    .booking-service-option h4 {
+      font-size: 0.98rem !important;
+      margin-bottom: 0.15rem !important;
+    }
+    
+    .booking-service-option p {
+      font-size: 0.78rem !important;
+    }
+    
+    /* Responsive tweaks for true full screen booking */
+    @media (max-width: 992px) {
+      body {
+        overflow: auto !important;
+      }
+      .fullscreen-booking-container {
+        height: auto !important;
+        width: 100% !important;
+        max-height: none !important;
+        overflow: visible !important;
+      }
+      .booking-card {
+        grid-template-columns: 1fr !important;
+        height: auto !important;
+        min-height: auto !important;
+        overflow: visible !important;
+      }
+      .booking-sidebar {
+        height: auto !important;
+        padding: 3rem 2rem 2rem 2rem !important;
+      }
+      .booking-content {
+        height: auto !important;
+        overflow-y: visible !important;
+        padding: 2.5rem 2rem !important;
+      }
+      .back-home-btn {
+        position: static !important;
+        margin-bottom: 2rem !important;
+        display: inline-flex !important;
+        width: auto !important;
+        max-width: max-content;
+      }
+      .booking-services-picker {
+        grid-template-columns: 1fr !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- --- PAGE PRELOADER --- -->
+  <div id="page-loader" class="page-loader">
+    <div class="newtons-cradle">
+      <div class="newtons-cradle__dot"></div>
+      <div class="newtons-cradle__dot"></div>
+      <div class="newtons-cradle__dot"></div>
+      <div class="newtons-cradle__dot"></div>
+    </div>
+  </div>
+
+  <div class="fullscreen-booking-container">
+    <!-- Scheduler Card (Pre-activated reveal since it is above fold) -->
+    <div class="booking-card reveal reveal-up active-reveal">
+      <!-- Sidebar Tracker -->
+      <div class="booking-sidebar">
+        <div>
+          <a href="index.html" style="display: inline-block; margin-bottom: 2rem;">
+            <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 44px; height: 44px;">
+              <rect width="40" height="40" rx="8" fill="var(--bg-white)" />
+              <path d="M10 28V12L15 17L20 12L25 17L30 12V28" stroke="var(--primary)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" />
+              <circle cx="20" cy="27" r="2.5" fill="var(--accent)" />
+            </svg>
+          </a>
+          <h3>Consultation Scheduler</h3>
+          <p>Schedule standard video calls or in-person advisory blocks.</p>
+        </div>
+        
+        <div class="booking-steps">
+          <div class="booking-step-item active" id="step-nav-1">
+            <span class="booking-step-num">1</span>
+            <span class="booking-step-text">Service Domain</span>
+          </div>
+          <div class="booking-step-item" id="step-nav-2">
+            <span class="booking-step-num">2</span>
+            <span class="booking-step-text">Date & Slot</span>
+          </div>
+          <div class="booking-step-item" id="step-nav-3">
+            <span class="booking-step-num">3</span>
+            <span class="booking-step-text">Information</span>
+          </div>
+        </div>
+        
+        <div style="font-size: 0.85rem; color: rgba(255, 255, 255, 0.5);">
+          📞 Assistance: <strong>+91 98765 43210</strong>
+        </div>
+      </div>
+      
+      <!-- Content Picker Panel -->
+      <div class="booking-content">
+        <!-- Exit button back to website -->
+        <a href="index.html" class="back-home-btn">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"></path>
+          </svg>
+          Back to Website
+        </a>
+        
+        <form id="booking-flow-form" onsubmit="return false;">
+          
+          <!-- View 1: Select Service -->
+          <div class="booking-view active" id="booking-view-1">
+            <h3 style="margin-bottom: 1.5rem; font-size: 1.35rem;">Choose a service domain</h3>
+            
+            <div class="booking-services-picker">
+              <div class="booking-service-option selected" data-value="Income Tax Filing">
+                <div>
+                  <h4>Income Tax Filing</h4>
+                  <p>Optimize structures, deductions, returns (ITR 1-7)</p>
+                </div>
+                <span class="booking-service-badge">45 Mins</span>
+              </div>
+              
+              <div class="booking-service-option" data-value="GST Registration & Returns">
+                <div>
+                  <h4>GST Registration & Returns</h4>
+                  <p>Obtain registrations, monthly returns, ITC audits</p>
+                </div>
+                <span class="booking-service-badge">30 Mins</span>
+              </div>
+
+              <div class="booking-service-option" data-value="Company Incorporation">
+                <div>
+                  <h4>Company Incorporation</h4>
+                  <p>Register Pvt Ltd, OPC, LLP, Partnership deeds</p>
+                </div>
+                <span class="booking-service-badge">60 Mins</span>
+              </div>
+
+              <div class="booking-service-option" data-value="Audit & Assurance">
+                <div>
+                  <h4>Audit & Assurance</h4>
+                  <p>Statutory balance audits, internal reviews, tax audits</p>
+                </div>
+                <span class="booking-service-badge">60 Mins</span>
+              </div>
+
+              <div class="booking-service-option" data-value="Accounting & Bookkeeping">
+                <div>
+                  <h4>Accounting & Bookkeeping</h4>
+                  <p>Outsource accounts, invoices, bank reconciliations</p>
+                </div>
+                <span class="booking-service-badge">45 Mins</span>
+              </div>
+
+              <div class="booking-service-option" data-value="TDS Compliance">
+                <div>
+                  <h4>TDS Compliance</h4>
+                  <p>Withholding filings, monthly deposits, Form 16</p>
+                </div>
+                <span class="booking-service-badge">30 Mins</span>
+              </div>
+
+              <div class="booking-service-option" data-value="Business Advisory">
+                <div>
+                  <h4>Business Advisory</h4>
+                  <p>Capital structure, strategic valuations, mergers</p>
+                </div>
+                <span class="booking-service-badge">45 Mins</span>
+              </div>
+
+              <div class="booking-service-option" data-value="ROC Compliance">
+                <div>
+                  <h4>ROC Compliance</h4>
+                  <p>MCA annual filings, ROC registry maintenance</p>
+                </div>
+                <span class="booking-service-badge">45 Mins</span>
+              </div>
+            </div>
+            
+            <div class="booking-nav-buttons" style="justify-content: flex-end;">
+              <button type="button" class="btn btn-primary" id="booking-next-1">Next: Select Slot &rarr;</button>
+            </div>
+          </div>
+          
+          <!-- View 2: Select Date & Time -->
+          <div class="booking-view" id="booking-view-2">
+            <h3 style="margin-bottom: 1.5rem; font-size: 1.35rem;">Select Date and Time Slot</h3>
+            
+            <div class="calendar-slots-grid">
+              <!-- Date input -->
+              <div class="date-input-group">
+                <label for="booking-date">Choose Date</label>
+                <input type="date" id="booking-date" class="form-input" style="background-color: var(--bg-light);" required>
+              </div>
+              
+              <!-- Slots -->
+              <div>
+                <div class="time-slots-header">Available slots (IST)</div>
+                <div class="time-slots-grid" id="time-slots-container">
+                  <span class="time-slot" data-slot="09:30 AM - 10:15 AM">09:30 AM</span>
+                  <span class="time-slot" data-slot="10:30 AM - 11:15 AM">10:30 AM</span>
+                  <span class="time-slot" data-slot="11:30 AM - 12:15 PM">11:30 AM</span>
+                  <span class="time-slot disabled" data-slot="02:00 PM - 02:45 PM">02:00 PM</span>
+                  <span class="time-slot" data-slot="03:00 PM - 03:45 PM">03:00 PM</span>
+                  <span class="time-slot" data-slot="04:30 PM - 05:15 PM">04:30 PM</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="booking-nav-buttons">
+              <button type="button" class="btn btn-secondary" id="booking-prev-2">&larr; Back</button>
+              <button type="button" class="btn btn-primary" id="booking-next-2">Next: Details &rarr;</button>
+            </div>
+          </div>
+          
+          <!-- View 3: Details -->
+          <div class="booking-view" id="booking-view-3">
+            <h3 style="margin-bottom: 1.5rem; font-size: 1.35rem;">Enter Your Details</h3>
+            
+            <div class="form-group">
+              <label for="booking-name">Full Name</label>
+              <input type="text" id="booking-name" class="form-input" placeholder="Your Name" required>
+            </div>
+            <div class="form-group">
+              <label for="booking-email">Email Address</label>
+              <input type="email" id="booking-email" class="form-input" placeholder="yourname@domain.com" required>
+            </div>
+            <div class="form-group">
+              <label for="booking-message">Query Brief (Optional)</label>
+              <textarea id="booking-message" class="form-input" rows="3" placeholder="Tell us briefly about your tax/accounting query..."></textarea>
+            </div>
+            
+            <div class="booking-nav-buttons">
+              <button type="button" class="btn btn-secondary" id="booking-prev-3">&larr; Back</button>
+              <button type="submit" class="btn btn-primary" id="booking-submit">Confirm Booking &check;</button>
+            </div>
+          </div>
+          
+          <!-- View 4: Success View (Initially Hidden) -->
+          <div class="booking-view" id="booking-view-4">
+            <div class="booking-success-view">
+              <div class="success-icon-wrap">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <h3>Consultation Confirmed!</h3>
+              <p style="font-size: 0.9rem;">Your slot has been booked. Meeting link and calendar invite have been sent to your email.</p>
+              
+              <div class="booking-summary-box">
+                <div class="booking-summary-row">
+                  <label>Selected Service</label>
+                  <span id="summary-service">-</span>
+                </div>
+                <div class="booking-summary-row">
+                  <label>Consultation Date</label>
+                  <span id="summary-date">-</span>
+                </div>
+                <div class="booking-summary-row">
+                  <label>Time Slot (IST)</label>
+                  <span id="summary-slot">-</span>
+                </div>
+                <div class="booking-summary-row">
+                  <label>Client Name</label>
+                  <span id="summary-name">-</span>
+                </div>
+              </div>
+              
+              <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 2.5rem; flex-wrap: wrap;">
+                <a href="index.html" class="btn btn-secondary" id="booking-home-redirect-btn" style="flex: 1; max-width: 250px; text-align: center; display: inline-flex; align-items: center; justify-content: center; text-decoration: none; padding: 0.85rem 1.5rem; font-family: var(--font-heading); font-weight: 600; font-size: 0.95rem;">Go back to Home Page (10s)</a>
+                <button type="button" class="btn btn-primary" id="booking-reset-btn" style="flex: 1; max-width: 250px;">Schedule Another Meeting</button>
+              </div>
+            </div>
+          </div>
+          
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

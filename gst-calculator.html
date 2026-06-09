@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Calculate CGST, SGST, and total gross/net amounts instantly with our free interactive GST Calculator. Supports add and remove modes.">
+  <title>GST Calculator (Add &amp; Remove GST) | Apex Partners</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* =====================================================
+       GST CALCULATOR PAGE — SPECIFIC STYLES
+       ===================================================== */
+    .subpage-hero {
+      position: relative;
+      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 55%, hsl(222,47%,22%) 100%);
+      padding: 9rem 0 6rem;
+      overflow: hidden;
+      text-align: center;
+    }
+    .subpage-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 80% 30%, rgba(212,175,55,0.18) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 60% at 10% 80%, rgba(5,150,105,0.12) 0%, transparent 55%);
+      pointer-events: none;
+    }
+    .subpage-hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 80px;
+      background: var(--bg-light);
+      clip-path: ellipse(55% 100% at 50% 100%);
+      pointer-events: none;
+    }
+    .hero-mesh {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+    }
+    .hero-inner {
+      position: relative;
+      z-index: 2;
+    }
+    .hero-breadcrumb {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 1.25rem;
+      letter-spacing: 0.04em;
+    }
+    .hero-breadcrumb a {
+      color: rgba(255,255,255,0.55);
+      transition: color var(--transition-fast);
+    }
+    .hero-breadcrumb a:hover { color: var(--accent); }
+    .hero-breadcrumb span { color: var(--accent); font-weight: 700; }
+    .hero-breadcrumb svg {
+      width: 14px;
+      height: 14px;
+      color: rgba(255,255,255,0.3);
+    }
+    .subpage-hero .badge {
+      background: rgba(212,175,55,0.18);
+      border: 1px solid rgba(212,175,55,0.4);
+      color: var(--accent);
+      backdrop-filter: blur(8px);
+    }
+    .subpage-hero h1 {
+      color: #fff;
+      font-size: clamp(2rem, 5vw, 3.25rem);
+      line-height: 1.18;
+      margin-bottom: 1rem;
+      max-width: 750px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .subpage-hero h1 em {
+      font-style: normal;
+      color: var(--accent);
+    }
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0.55rem 1.35rem;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.85);
+      text-decoration: none;
+      transition: all var(--transition-fast);
+      backdrop-filter: blur(8px);
+    }
+    .back-btn:hover {
+      background: var(--accent);
+      color: var(--primary);
+      border-color: var(--accent);
+      transform: translateX(-4px);
+    }
+    .back-btn svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    /* Layout Structure */
+    .calc-layout-container {
+      padding: 4rem 0 6rem;
+      background: var(--bg-light);
+    }
+    .calc-split-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 2.5rem;
+      align-items: start;
+    }
+    @media (max-width: 992px) {
+      .calc-split-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .calc-form-card {
+      background: var(--bg-white);
+      padding: 2.5rem;
+      border-radius: var(--border-radius-lg);
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-md);
+    }
+    .calc-form-title {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 1.75rem;
+      border-bottom: 2px solid var(--border-color);
+      padding-bottom: 0.5rem;
+    }
+
+    /* Form Elements */
+    .inp-group {
+      margin-bottom: 1.5rem;
+    }
+    .inp-group label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+    .inp-wrap {
+      display: flex;
+      align-items: center;
+      border: 1.5px solid var(--border-color);
+      border-radius: 10px;
+      background: var(--bg-light);
+      transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+      overflow: hidden;
+    }
+    .inp-wrap:focus-within {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(212,175,55,0.12);
+    }
+    .inp-prefix {
+      padding: 0 0.85rem;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      background: rgba(212,175,55,0.06);
+      border-right: 1.5px solid var(--border-color);
+      line-height: 1;
+      align-self: stretch;
+      display: flex;
+      align-items: center;
+    }
+    .inp-wrap input,
+    .inp-wrap select {
+      flex: 1;
+      border: none;
+      outline: none;
+      background: transparent;
+      padding: 0.75rem 1rem;
+      font-family: var(--font-body);
+      font-size: 1rem;
+      color: var(--text-dark);
+      width: 100%;
+    }
+    .inp-wrap select {
+      cursor: pointer;
+    }
+    .inp-help {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 0.4rem;
+    }
+
+    /* Radio Group */
+    .radio-group {
+      display: flex;
+      gap: 1.5rem;
+      margin-top: 0.5rem;
+    }
+    .radio-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-medium);
+      cursor: pointer;
+    }
+    .radio-label input[type="radio"] {
+      accent-color: var(--accent);
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+    }
+
+    /* Sidebar results panel */
+    .calc-sidebar-sticky {
+      position: sticky;
+      top: 100px;
+      z-index: 10;
+    }
+    .calc-results-card {
+      background: linear-gradient(135deg, hsl(222,47%,8%) 0%, var(--primary) 100%);
+      color: var(--text-light);
+      padding: 2.25rem;
+      border-radius: var(--border-radius-lg);
+      box-shadow: var(--shadow-lg);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      margin-bottom: 1.5rem;
+    }
+    .calc-results-card h3 {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 1.25rem;
+    }
+    .results-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      padding-bottom: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    .result-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.65rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .result-row:last-child { border-bottom: none; }
+    .result-row .r-label {
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.65);
+      font-weight: 500;
+    }
+    .result-row .r-value {
+      font-family: var(--font-heading);
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #fff;
+    }
+    .result-row.total {
+      margin-top: 0.5rem;
+      padding-top: 0.85rem;
+      border-top: 1.5px solid rgba(255,255,255,0.15);
+    }
+    .result-row.total .r-label {
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+    .result-row.total .r-value {
+      color: var(--accent);
+      font-size: 1.25rem;
+    }
+
+    /* Breakdown Visuals */
+    .comparison-box {
+      background: var(--bg-white);
+      border-radius: var(--border-radius-lg);
+      border: 1px solid var(--border-color);
+      padding: 1.75rem;
+      box-shadow: var(--shadow-sm);
+    }
+    .comparison-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+    .gst-breakdown-pill {
+      display: flex;
+      height: 14px;
+      border-radius: 50px;
+      overflow: hidden;
+      margin-top: 1rem;
+      border: 1px solid var(--border-color);
+    }
+    .pill-segment {
+      height: 100%;
+      transition: width 0.5s ease;
+    }
+    .pill-segment.base { background: var(--primary); }
+    .pill-segment.cgst { background: var(--accent); }
+    .pill-segment.sgst { background: var(--secondary); }
+
+    .pill-legend {
+      display: flex;
+      gap: 1.25rem;
+      margin-top: 0.85rem;
+      flex-wrap: wrap;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-medium);
+    }
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .legend-dot.base { background: var(--primary); }
+    .legend-dot.cgst { background: var(--accent); }
+    .legend-dot.sgst { background: var(--secondary); }
+
+    /* Action buttons */
+    .action-btn-hub {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 0.85rem;
+      border-radius: 10px;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 0.95rem;
+      background: var(--accent);
+      color: var(--primary);
+      border: 2px solid var(--primary);
+      box-shadow: 0 4px 0 0 var(--primary);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      text-decoration: none;
+      margin-top: 1.5rem;
+      border-style: solid;
+    }
+    .action-btn-hub:hover {
+      background: var(--primary);
+      color: var(--accent);
+      border-color: var(--accent);
+      box-shadow: 0 4px 0 0 var(--accent);
+      transform: translateY(-2px);
+    }
+    .action-btn-hub svg { width: 18px; height: 18px; }
+
+    .copy-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      background: var(--bg-light);
+      border: 1.5px solid var(--border-color);
+      border-radius: 8px;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      margin-top: 1.25rem;
+      transition: all var(--transition-fast);
+      width: 100%;
+      justify-content: center;
+    }
+    .copy-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-light);
+    }
+    .copy-btn svg { width: 15px; height: 15px; }
+    .copy-btn.copied {
+      border-color: var(--secondary);
+      color: var(--secondary);
+      background: hsl(162, 76%, 96%);
+    }
+  </style>
+</head>
+<body>
+  <!-- --- PAGE PRELOADER --- -->
+  <div id="page-loader" class="page-loader">
+    <div class="newtons-cradle">
+      <div class="newtons-cradle__dot"></div>
+      <div class="newtons-cradle__dot"></div>
+      <div class="newtons-cradle__dot"></div>
+      <div class="newtons-cradle__dot"></div>
+    </div>
+  </div>
+
+  <!-- --- HEADER / NAVIGATION --- -->
+  <header class="header" id="header">
+    <div class="container nav-container">
+      <a href="index.html" class="logo" id="logo-link">
+        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="40" height="40" rx="8" fill="var(--primary)" />
+          <path d="M10 28V12L15 17L20 12L25 17L30 12V28" stroke="var(--accent)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" />
+          <circle cx="20" cy="27" r="2.5" fill="var(--accent)" />
+        </svg>
+        <span>
+          <strong>APEX PARTNERS</strong>
+          <small>CHARTERED ACCOUNTANTS</small>
+        </span>
+      </a>
+
+      <nav class="nav-menu" id="nav-menu">
+        <a href="index.html" class="nav-link" id="link-home">Home</a>
+        <a href="about.html" class="nav-link" id="link-about">About Us</a>
+        <a href="services.html" class="nav-link" id="link-services">Services</a>
+        <a href="calculators.html" class="nav-link active" id="link-resources">Calculators</a>
+        <a href="contact.html" class="nav-link" id="link-contact">Contact Us</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="booking.html" class="btn btn-primary" id="desktop-cta-btn">Book Consultation</a>
+      </div>
+      
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle Navigation">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- --- SUBPAGE HERO --- -->
+  <section class="subpage-hero">
+    <div class="hero-mesh"></div>
+    <div class="container hero-inner">
+      <nav class="hero-breadcrumb reveal reveal-up" aria-label="Breadcrumb">
+        <a href="index.html">Home</a>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+        <a href="calculators.html">Calculators</a>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+        <span>GST Calculator</span>
+      </nav>
+      <span class="badge reveal reveal-up delay-1">GST Slabs</span>
+      <h1 class="reveal reveal-up delay-2">
+        Goods &amp; Services Tax <em>Calculator</em>
+      </h1>
+      <p class="hero-animated-subtitle reveal reveal-up delay-3">
+        Determine CGST, SGST, net amount, and gross values instantly under standard service and luxury item rate structures.
+      </p>
+      <div class="reveal reveal-up delay-4" style="margin-top: 1.5rem;">
+        <a href="calculators.html" class="back-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+          Back to Calculators
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- --- MAIN CALCULATOR GRID --- -->
+  <section class="calc-layout-container">
+    <div class="container">
+      <div class="calc-split-grid">
+        
+        <!-- Left: Inputs Form -->
+        <div class="calc-form-card reveal reveal-up">
+          <h2 class="calc-form-title">Enter Transaction Details</h2>
+
+          <div class="inp-group">
+            <label for="gst-amount">Base Amount</label>
+            <div class="inp-wrap">
+              <span class="inp-prefix">₹</span>
+              <input type="number" id="gst-amount" value="10000" min="0" placeholder="e.g. 10000" oninput="calcGST()">
+            </div>
+            <p class="inp-help">The amount you wish to calculate tax on (either base taxable cost or gross inclusive cost).</p>
+          </div>
+
+          <div class="inp-group">
+            <label for="gst-rate">GST Rate Slab</label>
+            <div class="inp-wrap">
+              <select id="gst-rate" onchange="calcGST()">
+                <option value="5">5% — Essential items (Food, primary goods)</option>
+                <option value="12">12% — Standard goods (Electronics, packaged goods)</option>
+                <option value="18" selected>18% — Standard services (Consultancy, software, IT)</option>
+                <option value="28">28% — Luxury goods (Vehicles, premium items)</option>
+              </select>
+            </div>
+            <p class="inp-help">Standard rates established by the GST Council of India.</p>
+          </div>
+
+          <div class="inp-group">
+            <label>Calculation Mode</label>
+            <div class="radio-group">
+              <label class="radio-label">
+                <input type="radio" name="gst-mode" value="add" checked onchange="calcGST()"> 
+                Add GST (Exclusive)
+              </label>
+              <label class="radio-label">
+                <input type="radio" name="gst-mode" value="remove" onchange="calcGST()"> 
+                Remove GST (Inclusive)
+              </label>
+            </div>
+            <p class="inp-help" style="margin-top: 0.6rem;">Use "Add GST" to compute tax on top of a net base amount. Use "Remove GST" if the base amount is already inclusive of tax.</p>
+          </div>
+
+        </div>
+
+        <!-- Right: Results Sidebar -->
+        <div class="calc-sidebar-sticky reveal reveal-up delay-1">
+          
+          <!-- Live Breakdown Card -->
+          <div class="calc-results-card">
+            <h3>Tax Calculation</h3>
+            <div class="results-title">GST Breakdown</div>
+            <div class="result-row">
+              <span class="r-label">Net Amount (excl. GST)</span>
+              <span class="r-value" id="gst-net">₹10,000.00</span>
+            </div>
+            <div class="result-row">
+              <span class="r-label">CGST (<span id="gst-cgst-pct">9</span>%)</span>
+              <span class="r-value" id="gst-cgst">₹900.00</span>
+            </div>
+            <div class="result-row">
+              <span class="r-label">SGST (<span id="gst-sgst-pct">9</span>%)</span>
+              <span class="r-value" id="gst-sgst">₹900.00</span>
+            </div>
+            <div class="result-row total">
+              <span class="r-label">Total Gross Amount</span>
+              <span class="r-value" id="gst-total">₹11,800.00</span>
+            </div>
+          </div>
+
+          <!-- Visual Pill & Share/Copy Box -->
+          <div class="comparison-box">
+            <div class="comparison-title">Amount Proportion Breakdown</div>
+            
+            <div class="gst-breakdown-pill" id="gst-pill" aria-hidden="true">
+              <div class="pill-segment base" id="pill-base" style="width:84.7%"></div>
+              <div class="pill-segment cgst" id="pill-cgst" style="width:7.65%"></div>
+              <div class="pill-segment sgst" id="pill-sgst" style="width:7.65%"></div>
+            </div>
+            <div class="pill-legend">
+              <span class="legend-item"><span class="legend-dot base"></span> Base Net</span>
+              <span class="legend-item"><span class="legend-dot cgst"></span> CGST</span>
+              <span class="legend-item"><span class="legend-dot sgst"></span> SGST</span>
+            </div>
+
+            <button class="copy-btn" id="gst-copy-btn" onclick="copyGSTResult()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Copy Result to Clipboard
+            </button>
+            
+            <a href="booking.html" class="action-btn-hub">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              Speak to a GST Expert
+            </a>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- --- FOOTER --- -->
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div class="footer-col">
+        <a href="index.html" class="logo" style="margin-bottom: 1.5rem;" id="footer-logo-link">
+          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="40" height="40" rx="8" fill="var(--bg-white)" />
+            <path d="M10 28V12L15 17L20 12L25 17L30 12V28" stroke="var(--primary)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" />
+            <circle cx="20" cy="27" r="2.5" fill="var(--accent)" />
+          </svg>
+          <span style="color: var(--text-light)">
+            <strong>APEX PARTNERS</strong>
+            <small>CHARTERED ACCOUNTANTS</small>
+          </span>
+        </a>
+        <p>Providing structural bookkeeping, tax compliance planning, company audit audits, and high-quality business consultation since 2011.</p>
+      </div>
+      
+      <div class="footer-col">
+        <h4>Our Services</h4>
+        <div class="footer-links">
+          <a href="services.html">Income Tax Filing</a>
+          <a href="services.html">GST Advisory</a>
+          <a href="services.html">Company Setup</a>
+          <a href="services.html">Statutory Audit</a>
+          <a href="services.html">Day-to-day Bookkeeping</a>
+          <a href="services.html">TDS &amp; ROC Filings</a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <div class="footer-links">
+          <a href="index.html">Home</a>
+          <a href="about.html">About Our Firm</a>
+          <a href="calculators.html">Tax slab Calculators</a>
+          <a href="booking.html">Book Appointment</a>
+          <a href="contact.html">Contact details</a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Subscribe to Newsletter</h4>
+        <p>Get instant circulars on direct taxes and GST notifications directly in your inbox.</p>
+        <form class="footer-newsletter-form" onsubmit="return false;" id="newsletter-form">
+          <input type="email" class="footer-newsletter-input" placeholder="Your Email Address" required id="newsletter-email">
+          <button type="submit" class="footer-newsletter-btn" id="newsletter-btn">Join</button>
+        </form>
+      </div>
+    </div>
+    
+    <div class="container footer-bottom">
+      <p>&copy; 2026 Apex Partners. All Rights Reserved. Designed for compliance &amp; integrity.</p>
+      <div class="footer-legal-links">
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
+        <a href="disclaimer.html">Disclaimer</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- --- WHATSAPP CHAT FLOAT BUTTON --- -->
+  <a href="https://wa.me/919876543210" class="whatsapp-float" target="_blank" aria-label="Chat on WhatsApp" id="whatsapp-btn">
+    <svg viewBox="0 0 24 24" fill="currentColor">
+      <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.731-1.456L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.42 9.864-9.864.002-2.637-1.03-5.114-2.905-6.99C16.258 1.875 13.784 1.84c-5.437 0-9.862 4.42-9.866 9.863-.001 1.702.463 3.361 1.34 4.8l-.996 3.633 3.72-.975zm13.123-7.042c-.302-.15-1.78-.879-2.056-.979-.275-.1-.476-.15-.676.15-.2.3-.777.979-.952 1.179-.175.2-.35.225-.652.075-.302-.15-1.276-.47-2.43-1.499-.898-.8-1.503-1.79-1.679-2.09-.175-.3-.019-.462.13-.611.135-.135.302-.35.454-.525.151-.175.202-.3.302-.5.1-.2.05-.375-.025-.525-.075-.15-.676-1.628-.926-2.228-.243-.584-.489-.505-.676-.515-.175-.01-.375-.01-.575-.01-.2 0-.526.075-.802.375-.275.3-1.053 1.028-1.053 2.507s1.077 2.903 1.227 3.102c.15.2 2.119 3.235 5.132 4.532.716.309 1.275.493 1.71.632.72.228 1.375.196 1.893.118.577-.087 1.78-.727 2.03-1.428.25-.7.25-1.3.175-1.428-.075-.125-.275-.2-.577-.35z"/>
+    </svg>
+  </a>
+
+  <!-- --- CALCULATION SCRIPT --- -->
+  <script>
+    const fmtD = (n) => '₹' + n.toLocaleString('en-IN', {minimumFractionDigits:2, maximumFractionDigits:2});
+    const getVal = (id) => parseFloat(document.getElementById(id).value) || 0;
+
+    function calcGST() {
+      const base = getVal('gst-amount');
+      const rate = parseFloat(document.getElementById('gst-rate').value);
+      const mode = document.querySelector('input[name="gst-mode"]:checked').value;
+      const halfRate = rate / 2;
+
+      let net, gstAmt, cgst, sgst, total;
+
+      if (mode === 'add') {
+        net = base;
+        gstAmt = base * rate / 100;
+        cgst = gstAmt / 2;
+        sgst = gstAmt / 2;
+        total = base + gstAmt;
+      } else {
+        net = base / (1 + rate / 100);
+        gstAmt = base - net;
+        cgst = gstAmt / 2;
+        sgst = gstAmt / 2;
+        total = base;
+      }
+
+      document.getElementById('gst-net').textContent = fmtD(net);
+      document.getElementById('gst-cgst').textContent = fmtD(cgst);
+      document.getElementById('gst-sgst').textContent = fmtD(sgst);
+      document.getElementById('gst-total').textContent = fmtD(total);
+      document.getElementById('gst-cgst-pct').textContent = halfRate;
+      document.getElementById('gst-sgst-pct').textContent = halfRate;
+
+      // Pill proportions
+      const basePct = (net / total * 100).toFixed(2);
+      const cgstPct = (cgst / total * 100).toFixed(2);
+      const sgstPct = (sgst / total * 100).toFixed(2);
+      document.getElementById('pill-base').style.width = basePct + '%';
+      document.getElementById('pill-cgst').style.width = cgstPct + '%';
+      document.getElementById('pill-sgst').style.width = sgstPct + '%';
+
+      // Reset copy button
+      const btn = document.getElementById('gst-copy-btn');
+      btn.classList.remove('copied');
+      btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy Result to Clipboard';
+    }
+
+    function copyGSTResult() {
+      const net = document.getElementById('gst-net').textContent;
+      const cgst = document.getElementById('gst-cgst').textContent;
+      const sgst = document.getElementById('gst-sgst').textContent;
+      const total = document.getElementById('gst-total').textContent;
+      const rate = document.getElementById('gst-rate').value;
+      const text = `GST Calculation (${rate}%)\nNet Amount: ${net}\nCGST: ${cgst}\nSGST: ${sgst}\nTotal: ${total}`;
+
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(text).then(() => {
+          const btn = document.getElementById('gst-copy-btn');
+          btn.classList.add('copied');
+          btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Copied!';
+          setTimeout(() => {
+            btn.classList.remove('copied');
+            btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy Result to Clipboard';
+          }, 2500);
+        });
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      calcGST();
+    });
+  </script>
+
+  <script src="app.js"></script>
+</body>
+</html>

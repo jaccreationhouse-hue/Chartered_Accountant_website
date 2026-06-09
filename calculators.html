@@ -1,0 +1,1346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Calculate Income Tax (Old vs New Regime), GST breakdown, and HRA exemption instantly with our free online CA tools. Apex Partners Chartered Accountants.">
+  <title>Tax & GST Calculators | Apex Partners Chartered Accountants</title>
+  <link rel="stylesheet" href="styles.css">
+
+  <style>
+    /* =====================================================
+       CALCULATORS PAGE — SPECIFIC STYLES
+       ===================================================== */
+
+    /* --- HERO ENHANCEMENTS --- */
+    .subpage-hero {
+      position: relative;
+      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 55%, hsl(222,47%,22%) 100%);
+      padding: 9rem 0 6rem;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .subpage-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 80% 30%, rgba(212,175,55,0.18) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 60% at 10% 80%, rgba(5,150,105,0.12) 0%, transparent 55%);
+      pointer-events: none;
+    }
+
+    .subpage-hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 80px;
+      background: var(--bg-light);
+      clip-path: ellipse(55% 100% at 50% 100%);
+      pointer-events: none;
+    }
+
+    /* Mesh grid overlay */
+    .hero-mesh {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-breadcrumb {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 1.25rem;
+      letter-spacing: 0.04em;
+    }
+
+    .hero-breadcrumb a {
+      color: rgba(255,255,255,0.55);
+      transition: color var(--transition-fast);
+    }
+
+    .hero-breadcrumb a:hover { color: var(--accent); }
+
+    .hero-breadcrumb span { color: var(--accent); font-weight: 700; }
+
+    .hero-breadcrumb svg {
+      width: 14px;
+      height: 14px;
+      color: rgba(255,255,255,0.3);
+    }
+
+    .subpage-hero .badge {
+      background: rgba(212,175,55,0.18);
+      border: 1px solid rgba(212,175,55,0.4);
+      color: var(--accent);
+      backdrop-filter: blur(8px);
+    }
+
+    .subpage-hero h1 {
+      color: #fff;
+      font-size: clamp(2rem, 5vw, 3.25rem);
+      line-height: 1.18;
+      margin-bottom: 1rem;
+      max-width: 750px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .subpage-hero h1 em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .hero-animated-subtitle {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.65);
+      max-width: 600px;
+      margin: 0 auto 2.25rem;
+      line-height: 1.7;
+    }
+
+    .hero-chips {
+      display: flex;
+      gap: 0.75rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 0.5rem;
+    }
+
+    .hero-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 0.45rem 1.1rem;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.16);
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.85);
+      backdrop-filter: blur(8px);
+      transition: all var(--transition-normal);
+    }
+
+    .hero-chip:hover {
+      background: rgba(212,175,55,0.2);
+      border-color: rgba(212,175,55,0.5);
+      color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .hero-chip svg {
+      width: 15px;
+      height: 15px;
+    }
+
+    /* --- CALCULATOR HUB SECTION --- */
+    .calc-hub-section {
+      padding: 5rem 0 6rem;
+      background: var(--bg-light);
+    }
+
+    .calc-hub-header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+
+    .calc-hub-header h2 {
+      font-size: clamp(1.75rem, 3vw, 2.5rem);
+      color: var(--primary);
+      margin-bottom: 0.75rem;
+    }
+
+    .calc-hub-header p {
+      font-size: 1.05rem;
+      color: var(--text-medium);
+      max-width: 580px;
+      margin: 0 auto;
+    }
+
+    .calc-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.75rem;
+      align-items: start;
+    }
+
+    /* --- CALCULATOR CARD BASE --- */
+    .calc-card {
+      background: var(--bg-white);
+      border-radius: var(--border-radius-lg);
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-md);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+    }
+
+    .calc-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 48px rgba(15,23,42,0.12);
+    }
+
+    /* Card Header */
+    .calc-card-header {
+      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+      padding: 1.5rem 1.75rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .calc-card-header::before {
+      content: '';
+      position: absolute;
+      top: -30px;
+      right: -30px;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: rgba(212,175,55,0.12);
+      pointer-events: none;
+    }
+
+    .calc-card-header::after {
+      content: '';
+      position: absolute;
+      bottom: -40px;
+      left: 20px;
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.04);
+      pointer-events: none;
+    }
+
+    .calc-icon-wrap {
+      flex-shrink: 0;
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
+      background: rgba(212,175,55,0.18);
+      border: 1px solid rgba(212,175,55,0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 2px;
+    }
+
+    .calc-icon-wrap svg {
+      width: 24px;
+      height: 24px;
+      color: var(--accent);
+    }
+
+    .calc-card-header-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .calc-card-header-info h3 {
+      color: #fff;
+      font-size: 1.15rem;
+      line-height: 1.3;
+      margin-bottom: 0.3rem;
+    }
+
+    .calc-card-header-info p {
+      color: rgba(255,255,255,0.55);
+      font-size: 0.8rem;
+      margin-bottom: 0;
+      line-height: 1.4;
+    }
+
+    /* Card Body */
+    .calc-card-body {
+      padding: 1.5rem 1.75rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    /* Tab Switcher */
+    .regime-tabs {
+      display: flex;
+      background: var(--bg-light);
+      border-radius: 10px;
+      padding: 4px;
+      margin-bottom: 1.25rem;
+      border: 1px solid var(--border-color);
+    }
+
+    .regime-tab {
+      flex: 1;
+      padding: 0.5rem 0.5rem;
+      border: none;
+      background: transparent;
+      border-radius: 8px;
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      white-space: nowrap;
+    }
+
+    .regime-tab.active {
+      background: var(--primary);
+      color: var(--accent);
+      box-shadow: 0 2px 8px rgba(15,23,42,0.2);
+    }
+
+    /* Input Group */
+    .inp-group {
+      margin-bottom: 1rem;
+    }
+
+    .inp-group label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-medium);
+      margin-bottom: 0.4rem;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+
+    .inp-wrap {
+      display: flex;
+      align-items: center;
+      border: 1.5px solid var(--border-color);
+      border-radius: 10px;
+      background: var(--bg-light);
+      transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+      overflow: hidden;
+    }
+
+    .inp-wrap:focus-within {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(212,175,55,0.12);
+    }
+
+    .inp-prefix {
+      padding: 0 0.75rem;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      background: rgba(212,175,55,0.06);
+      border-right: 1.5px solid var(--border-color);
+      line-height: 1;
+      align-self: stretch;
+      display: flex;
+      align-items: center;
+    }
+
+    .inp-wrap input,
+    .inp-wrap select {
+      flex: 1;
+      border: none;
+      outline: none;
+      background: transparent;
+      padding: 0.62rem 0.85rem;
+      font-family: var(--font-body);
+      font-size: 0.92rem;
+      color: var(--text-dark);
+      width: 100%;
+    }
+
+    .inp-wrap select {
+      cursor: pointer;
+    }
+
+    /* Radio group */
+    .radio-group {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .radio-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-medium);
+      cursor: pointer;
+    }
+
+    .radio-label input[type="radio"] {
+      accent-color: var(--accent);
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+    }
+
+    /* Toggle City */
+    .toggle-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 0.3rem;
+    }
+
+    .toggle-label-text {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-medium);
+    }
+
+    .toggle-switch {
+      position: relative;
+      width: 44px;
+      height: 24px;
+      flex-shrink: 0;
+    }
+
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+      position: absolute;
+    }
+
+    .toggle-slider {
+      position: absolute;
+      inset: 0;
+      background: var(--bg-light);
+      border: 1.5px solid var(--border-color);
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+
+    .toggle-slider::before {
+      content: '';
+      position: absolute;
+      height: 16px;
+      width: 16px;
+      left: 3px;
+      top: 50%;
+      transform: translateY(-50%);
+      border-radius: 50%;
+      background: var(--text-muted);
+      transition: all var(--transition-fast);
+    }
+
+    .toggle-switch input:checked + .toggle-slider {
+      background: var(--primary);
+      border-color: var(--primary);
+    }
+
+    .toggle-switch input:checked + .toggle-slider::before {
+      transform: translateY(-50%) translateX(20px);
+      background: var(--accent);
+    }
+
+    /* Results Panel */
+    .calc-results-panel {
+      background: linear-gradient(135deg, hsl(222,47%,8%) 0%, var(--primary) 100%);
+      border-radius: 12px;
+      padding: 1.1rem 1.25rem;
+      margin-top: 1.1rem;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .results-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      margin-bottom: 0.85rem;
+    }
+
+    .result-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.45rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .result-row:last-child { border-bottom: none; }
+
+    .result-row .r-label {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.6);
+      font-weight: 500;
+    }
+
+    .result-row .r-value {
+      font-family: var(--font-heading);
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .result-row.total .r-label {
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .result-row.total .r-value {
+      color: var(--accent);
+      font-size: 1.1rem;
+    }
+
+    /* Comparison Bar Chart */
+    .comparison-chart {
+      margin-top: 1.1rem;
+      background: var(--bg-light);
+      border-radius: 10px;
+      padding: 1rem;
+      border: 1px solid var(--border-color);
+    }
+
+    .chart-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin-bottom: 0.85rem;
+    }
+
+    .chart-bars {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .chart-bar-row {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .chart-bar-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-medium);
+      width: 30px;
+      flex-shrink: 0;
+      text-align: right;
+    }
+
+    .chart-bar-track {
+      flex: 1;
+      height: 10px;
+      background: rgba(15,23,42,0.07);
+      border-radius: 50px;
+      overflow: hidden;
+    }
+
+    .chart-bar-fill {
+      height: 100%;
+      border-radius: 50px;
+      transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .chart-bar-fill.old { background: linear-gradient(90deg, hsl(222,47%,30%), hsl(222,47%,45%)); }
+    .chart-bar-fill.new { background: linear-gradient(90deg, var(--secondary), var(--secondary-light)); }
+
+    .chart-bar-amt {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      width: 60px;
+      flex-shrink: 0;
+    }
+
+    /* GST breakdown pill */
+    .gst-breakdown-pill {
+      display: flex;
+      height: 12px;
+      border-radius: 50px;
+      overflow: hidden;
+      margin-top: 1rem;
+      border: 1px solid var(--border-color);
+    }
+
+    .pill-segment {
+      height: 100%;
+      transition: width 0.5s ease;
+      position: relative;
+    }
+
+    .pill-segment.base { background: var(--primary); }
+    .pill-segment.cgst { background: var(--accent); }
+    .pill-segment.sgst { background: var(--secondary); }
+
+    .pill-legend {
+      display: flex;
+      gap: 1rem;
+      margin-top: 0.6rem;
+      flex-wrap: wrap;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-medium);
+    }
+
+    .legend-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .legend-dot.base { background: var(--primary); }
+    .legend-dot.cgst { background: var(--accent); }
+    .legend-dot.sgst { background: var(--secondary); }
+
+    /* Copy button */
+    .copy-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      background: var(--bg-light);
+      border: 1.5px solid var(--border-color);
+      border-radius: 8px;
+      padding: 0.4rem 0.85rem;
+      cursor: pointer;
+      margin-top: 0.75rem;
+      transition: all var(--transition-fast);
+      letter-spacing: 0.02em;
+    }
+
+    .copy-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-light);
+    }
+
+    .copy-btn svg { width: 14px; height: 14px; }
+
+    .copy-btn.copied {
+      border-color: var(--secondary);
+      color: var(--secondary);
+      background: hsl(162, 76%, 96%);
+    }
+
+    /* HRA Rule Card */
+    .hra-rule-card {
+      background: hsl(162, 76%, 96%);
+      border: 1px solid hsl(162, 76%, 80%);
+      border-radius: 10px;
+      padding: 0.85rem 1rem;
+      margin-top: 0.75rem;
+    }
+
+    .hra-rule-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--secondary-hover);
+      margin-bottom: 0.35rem;
+    }
+
+    .hra-rule-text {
+      font-size: 0.82rem;
+      color: hsl(162, 76%, 20%);
+      line-height: 1.5;
+      margin-bottom: 0;
+    }
+
+    /* HRA Savings Highlight */
+    .hra-savings-card {
+      background: linear-gradient(135deg, var(--accent) 0%, hsl(45,68%,45%) 100%);
+      border-radius: 10px;
+      padding: 0.9rem 1.1rem;
+      margin-top: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .hra-savings-icon {
+      width: 36px;
+      height: 36px;
+      background: rgba(0,0,0,0.15);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .hra-savings-icon svg {
+      width: 20px;
+      height: 20px;
+      color: var(--primary);
+    }
+
+    .hra-savings-info .s-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: rgba(15,23,42,0.6);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .hra-savings-info .s-amount {
+      font-family: var(--font-heading);
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--primary);
+      line-height: 1;
+    }
+
+    /* CTA Button inside card */
+    .calc-card-cta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 0.75rem;
+      border-radius: 10px;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 0.88rem;
+      background: var(--accent);
+      color: var(--primary);
+      border: 2px solid var(--primary);
+      box-shadow: 0 4px 0 0 var(--primary);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      text-decoration: none;
+      margin-top: 1.1rem;
+    }
+
+    .calc-card-cta:hover {
+      background: var(--primary);
+      color: var(--accent);
+      border-color: var(--accent);
+      box-shadow: 0 4px 0 0 var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .calc-card-cta svg { width: 16px; height: 16px; }
+
+    /* Input row hidden */
+    .inp-group.hidden { display: none; }
+
+    /* ---- TAX GUIDE SECTION ---- */
+    .tax-guide-section {
+      padding: 5rem 0;
+      background: var(--bg-white);
+    }
+
+    .guide-section-header {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: flex-end;
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .guide-section-header h2 {
+      font-size: clamp(1.5rem, 2.5vw, 2rem);
+      margin-bottom: 0.5rem;
+      line-height: 1.2;
+    }
+
+    .guide-section-header p {
+      color: var(--text-medium);
+      margin-bottom: 0;
+      font-size: 0.95rem;
+    }
+
+    .articles-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.75rem;
+    }
+
+    .article-card-new {
+      background: var(--bg-white);
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-lg);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--shadow-sm);
+      transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+    }
+
+    .article-card-new:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .article-img-area {
+      height: 180px;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .article-img-area::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 80% at 70% 30%, rgba(212,175,55,0.2) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .article-img-area svg {
+      width: 72px;
+      height: 72px;
+      color: rgba(255,255,255,0.15);
+      position: relative;
+      z-index: 1;
+    }
+
+    .article-img-category {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      background: rgba(212,175,55,0.95);
+      color: var(--primary);
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0.3rem 0.75rem;
+      border-radius: 50px;
+      z-index: 2;
+    }
+
+    .article-body {
+      padding: 1.5rem 1.75rem 1.75rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .article-body h3 {
+      font-size: 1.1rem;
+      color: var(--primary);
+      line-height: 1.35;
+      margin-bottom: 0.65rem;
+      font-weight: 700;
+    }
+
+    .article-body p {
+      font-size: 0.88rem;
+      color: var(--text-medium);
+      line-height: 1.6;
+      margin-bottom: 1.25rem;
+      flex: 1;
+    }
+
+    .article-read-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--primary);
+      letter-spacing: 0.02em;
+      transition: gap var(--transition-fast), color var(--transition-fast);
+    }
+
+    .article-read-link svg {
+      width: 16px;
+      height: 16px;
+      transition: transform var(--transition-fast);
+    }
+
+    .article-card-new:hover .article-read-link {
+      color: var(--accent);
+      gap: 10px;
+    }
+
+    .article-card-new:hover .article-read-link svg {
+      transform: translateX(3px);
+    }
+
+    /* ---- DISCLAIMER BANNER ---- */
+    .disclaimer-section {
+      padding: 3rem 0 5rem;
+      background: var(--bg-light);
+    }
+
+    .disclaimer-banner {
+      background: var(--bg-white);
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-lg);
+      padding: 2rem 2.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1.75rem;
+      box-shadow: var(--shadow-sm);
+      border-left: 5px solid hsl(210, 80%, 55%);
+    }
+
+    .disclaimer-icon {
+      flex-shrink: 0;
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      background: hsl(210, 80%, 96%);
+      border: 1px solid hsl(210, 80%, 82%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .disclaimer-icon svg {
+      width: 26px;
+      height: 26px;
+      color: hsl(210, 80%, 45%);
+    }
+
+    .disclaimer-content {
+      flex: 1;
+    }
+
+    .disclaimer-content h4 {
+      font-size: 1rem;
+      color: var(--primary);
+      margin-bottom: 0.35rem;
+      font-weight: 700;
+    }
+
+    .disclaimer-content p {
+      font-size: 0.88rem;
+      color: var(--text-medium);
+      margin-bottom: 0;
+      line-height: 1.6;
+    }
+
+    .disclaimer-actions {
+      flex-shrink: 0;
+    }
+
+    /* ==============================
+       RESPONSIVE
+       ============================== */
+
+    @media (max-width: 1100px) {
+      .calc-cards-grid {
+        grid-template-columns: 1fr;
+        max-width: 560px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .articles-grid {
+        grid-template-columns: 1fr;
+        max-width: 560px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .guide-section-header {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .disclaimer-banner {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.25rem;
+      }
+
+      .disclaimer-actions { width: 100%; }
+      .disclaimer-actions .btn { width: 100%; }
+
+      .hero-chips { gap: 0.5rem; }
+    }
+
+    @media (max-width: 500px) {
+      .chart-bar-amt { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- --- PAGE PRELOADER --- -->
+  <div id="page-loader" class="page-loader">
+    <div class="newtons-cradle">
+      <div class="newtons-cradle__dot"></div>
+      <div class="newtons-cradle__dot"></div>
+      <div class="newtons-cradle__dot"></div>
+      <div class="newtons-cradle__dot"></div>
+    </div>
+  </div>
+
+  <!-- --- HEADER / NAVIGATION --- -->
+  <header class="header" id="header">
+    <div class="container nav-container">
+      <a href="index.html" class="logo" id="logo-link">
+        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="40" height="40" rx="8" fill="var(--primary)" />
+          <path d="M10 28V12L15 17L20 12L25 17L30 12V28" stroke="var(--accent)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" />
+          <circle cx="20" cy="27" r="2.5" fill="var(--accent)" />
+        </svg>
+        <span>
+          <strong>APEX PARTNERS</strong>
+          <small>CHARTERED ACCOUNTANTS</small>
+        </span>
+      </a>
+
+      <nav class="nav-menu" id="nav-menu">
+        <a href="index.html" class="nav-link" id="link-home">Home</a>
+        <a href="about.html" class="nav-link" id="link-about">About Us</a>
+        <a href="services.html" class="nav-link" id="link-services">Services</a>
+        <a href="calculators.html" class="nav-link active" id="link-resources">Calculators</a>
+        <a href="contact.html" class="nav-link" id="link-contact">Contact Us</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="booking.html" class="btn btn-primary" id="desktop-cta-btn">Book Consultation</a>
+      </div>
+      
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle Navigation">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- ====================================================
+       SUBPAGE HERO
+       ==================================================== -->
+  <section class="subpage-hero">
+    <div class="hero-mesh"></div>
+    <div class="container hero-inner">
+
+      <!-- Breadcrumb -->
+      <nav class="hero-breadcrumb reveal reveal-up" aria-label="Breadcrumb">
+        <a href="index.html">Home</a>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+        <span>Calculators</span>
+      </nav>
+
+      <span class="badge reveal reveal-up delay-1">Financial Tools</span>
+
+      <h1 class="reveal reveal-up delay-2">
+        Smart Tax &amp; GST<br><em>Compliance Calculators</em>
+      </h1>
+
+      <p class="hero-animated-subtitle reveal reveal-up delay-3">
+        Estimate your income tax liability under Old &amp; New Regime, compute GST breakdowns, and calculate your HRA exemption—all in real time, completely free.
+      </p>
+
+      <!-- Chips -->
+      <div class="hero-chips reveal reveal-up delay-4">
+        <span class="hero-chip">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="12" y2="14"/></svg>
+          3 Calculators
+        </span>
+        <span class="hero-chip">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Instant Results
+        </span>
+        <span class="hero-chip">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          Free to Use
+        </span>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ====================================================
+       CALCULATOR HUB
+       ==================================================== -->
+  <section class="calc-hub-section" id="tax-calculators">
+    <div class="container">
+
+      <div class="calc-hub-header reveal reveal-up">
+        <h2>Interactive Tax Calculators</h2>
+        <p>Live results update as you type. All computations follow current Indian tax regulations (FY 2025-26).</p>
+      </div>
+
+      <div class="calc-cards-grid">
+
+        <!-- Teaser 1: Income Tax Calculator -->
+        <div class="calc-card reveal reveal-up delay-1">
+          <div class="calc-card-header">
+            <div class="calc-icon-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            </div>
+            <div class="calc-card-header-info">
+              <h3>Income Tax Calculator</h3>
+              <p>FY 2025-26 · Old vs New Regime</p>
+            </div>
+          </div>
+          <div class="calc-card-body">
+            <p style="margin-bottom: 1.5rem; min-height: 4.5rem; font-size: 0.88rem; line-height: 1.6; color: var(--text-medium);">Compare your tax liability under the Old and New tax regimes with up-to-date slabs, standard deductions, and exemptions for the financial year 2025-26.</p>
+            <a href="tax-calculator.html" class="calc-card-cta">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              Open Full Calculator
+            </a>
+          </div>
+        </div>
+
+        <!-- Teaser 2: GST Calculator -->
+        <div class="calc-card reveal reveal-up delay-2">
+          <div class="calc-card-header">
+            <div class="calc-icon-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="14.31" y1="8" x2="20.05" y2="17.94"/><line x1="9.69" y1="8" x2="21.17" y2="8"/><line x1="7.38" y1="12" x2="13.12" y2="2.06"/><line x1="9.69" y1="16" x2="3.95" y2="6.06"/><line x1="14.31" y1="16" x2="2.83" y2="16"/><line x1="16.62" y1="12" x2="10.88" y2="21.94"/></svg>
+            </div>
+            <div class="calc-card-header-info">
+              <h3>GST Calculator</h3>
+              <p>CGST &amp; SGST Split · Add/Remove GST</p>
+            </div>
+          </div>
+          <div class="calc-card-body">
+            <p style="margin-bottom: 1.5rem; min-height: 4.5rem; font-size: 0.88rem; line-height: 1.6; color: var(--text-medium);">Quickly calculate Goods and Services Tax (GST) for standard slabs (5%, 12%, 18%, 28%) in both inclusive and exclusive modes with CGST/SGST splits.</p>
+            <a href="gst-calculator.html" class="calc-card-cta">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              Open Full Calculator
+            </a>
+          </div>
+        </div>
+
+        <!-- Teaser 3: HRA Exemption Calculator -->
+        <div class="calc-card reveal reveal-up delay-3">
+          <div class="calc-card-header">
+            <div class="calc-icon-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            </div>
+            <div class="calc-card-header-info">
+              <h3>HRA Exemption Calculator</h3>
+              <p>u/s 10(13A) · Metro &amp; Non-Metro</p>
+            </div>
+          </div>
+          <div class="calc-card-body">
+            <p style="margin-bottom: 1.5rem; min-height: 4.5rem; font-size: 0.88rem; line-height: 1.6; color: var(--text-medium);">Determine the tax-exempt and taxable portions of your House Rent Allowance (HRA) based on your basic salary, HRA received, rent paid, and city type.</p>
+            <a href="hra-calculator.html" class="calc-card-cta">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              Open Full Calculator
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div><!-- /.container -->
+  </section>
+
+
+  <!-- ====================================================
+       TAX GUIDE ARTICLES
+       ==================================================== -->
+  <section class="tax-guide-section">
+    <div class="container">
+
+      <div class="guide-section-header reveal reveal-up">
+        <div>
+          <span class="badge">Knowledge Hub</span>
+          <h2>Tax Guides &amp; Notifications</h2>
+          <p>Stay informed about the latest updates in direct tax and GST regulation.</p>
+        </div>
+        <a href="contact.html" class="btn btn-secondary" style="white-space:nowrap;">View All Articles</a>
+      </div>
+
+      <div class="articles-grid">
+
+        <!-- Article 1 -->
+        <article class="article-card-new reveal reveal-left delay-1">
+          <div class="article-img-area">
+            <span class="article-img-category">Direct Tax</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M19 20H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v1m2 13a2 2 0 0 1-2-2V7m2 13a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2m-4-3H9M7 16h6M7 8h6m-6 4h3"/>
+            </svg>
+          </div>
+          <div class="article-body">
+            <h3>Budget 2026: Key Changes in New Regime Tax Slabs</h3>
+            <p>An in-depth analysis of the standard deduction increase to ₹75,000 and the restructured income tax brackets under the New Tax Regime—what it means for salaried employees and pensioners.</p>
+            <a href="#" class="article-read-link">
+              Read Article
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+        </article>
+
+        <!-- Article 2 -->
+        <article class="article-card-new reveal reveal-right delay-2">
+          <div class="article-img-area">
+            <span class="article-img-category">GST News</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5.586a1 1 0 0 1 .707.293l5.414 5.414a1 1 0 0 1 .293.707V19a2 2 0 0 1-2 2z"/>
+            </svg>
+          </div>
+          <div class="article-body">
+            <h3>Input Tax Credit (ITC) Reconciliation Best Practices</h3>
+            <p>Avoid costly GST mismatches between GSTR-2B and your purchase registers. Learn the systematic reconciliation process trusted by our CA team to prevent notices and protect your ITC claims.</p>
+            <a href="#" class="article-read-link">
+              Read Article
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+        </article>
+
+      </div><!-- /.articles-grid -->
+    </div>
+  </section>
+
+
+  <!-- ====================================================
+       DISCLAIMER BANNER
+       ==================================================== -->
+  <section class="disclaimer-section">
+    <div class="container">
+      <div class="disclaimer-banner reveal reveal-up">
+        <div class="disclaimer-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        </div>
+        <div class="disclaimer-content">
+          <h4>Estimates Only — Not a Substitute for Professional Advice</h4>
+          <p>These calculators provide indicative estimates based on standard tax rules. Individual circumstances, surcharge applicability, special incomes, and deductions may alter your actual liability. Always consult a qualified Chartered Accountant for precise tax filings and planning.</p>
+        </div>
+        <div class="disclaimer-actions">
+          <a href="booking.html" class="btn btn-primary">Book Now</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- --- FOOTER --- -->
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div class="footer-col">
+        <a href="index.html" class="logo" style="margin-bottom: 1.5rem;" id="footer-logo-link">
+          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="40" height="40" rx="8" fill="var(--bg-white)" />
+            <path d="M10 28V12L15 17L20 12L25 17L30 12V28" stroke="var(--primary)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" />
+            <circle cx="20" cy="27" r="2.5" fill="var(--accent)" />
+          </svg>
+          <span style="color: var(--text-light)">
+            <strong>APEX PARTNERS</strong>
+            <small>CHARTERED ACCOUNTANTS</small>
+          </span>
+        </a>
+        <p>Providing structural bookkeeping, tax compliance planning, company audit audits, and high-quality business consultation since 2011.</p>
+        <div class="footer-socials">
+          <a href="#" class="footer-social-btn" aria-label="LinkedIn">
+            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+          </a>
+          <a href="#" class="footer-social-btn" aria-label="Twitter">
+            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.7 0-1.37-.2-1.95-.53v.05c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.52 8.52 0 0 1-5.3 1.83 8.4 8.4 0 0 1-1-.06A12.08 12.08 0 0 0 8.29 20c7.55 0 11.68-6.26 11.68-11.68 0-.18 0-.35-.01-.53.8-.58 1.5-1.3 2.05-2.12H22.46z"/></svg>
+          </a>
+        </div>
+      </div>
+      
+      <div class="footer-col">
+        <h4>Our Services</h4>
+        <div class="footer-links">
+          <a href="services.html">Income Tax Filing</a>
+          <a href="services.html">GST Advisory</a>
+          <a href="services.html">Company Setup</a>
+          <a href="services.html">Statutory Audit</a>
+          <a href="services.html">Day-to-day Bookkeeping</a>
+          <a href="services.html">TDS &amp; ROC Filings</a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <div class="footer-links">
+          <a href="index.html">Home</a>
+          <a href="about.html">About Our Firm</a>
+          <a href="calculators.html">Tax slab Calculators</a>
+          <a href="booking.html">Book Appointment</a>
+          <a href="contact.html">Contact details</a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Subscribe to Newsletter</h4>
+        <p>Get instant circulars on direct taxes and GST notifications directly in your inbox.</p>
+        <form class="footer-newsletter-form" onsubmit="return false;" id="newsletter-form">
+          <input type="email" class="footer-newsletter-input" placeholder="Your Email Address" required id="newsletter-email">
+          <button type="submit" class="footer-newsletter-btn" id="newsletter-btn">Join</button>
+        </form>
+      </div>
+    </div>
+    
+    <div class="container footer-bottom">
+      <p>&copy; 2026 Apex Partners. All Rights Reserved. Designed for compliance &amp; integrity.</p>
+      <div class="footer-legal-links">
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
+        <a href="disclaimer.html">Disclaimer</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- --- WHATSAPP CHAT FLOAT BUTTON --- -->
+  <a href="https://wa.me/919876543210" class="whatsapp-float" target="_blank" aria-label="Chat on WhatsApp" id="whatsapp-btn">
+    <svg viewBox="0 0 24 24" fill="currentColor">
+      <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.731-1.456L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.42 9.864-9.864.002-2.637-1.03-5.114-2.905-6.99C16.258 1.875 13.784 1.84c-5.437 0-9.862 4.42-9.866 9.863-.001 1.702.463 3.361 1.34 4.8l-.996 3.633 3.72-.975zm13.123-7.042c-.302-.15-1.78-.879-2.056-.979-.275-.1-.476-.15-.676.15-.2.3-.777.979-.952 1.179-.175.2-.35.225-.652.075-.302-.15-1.276-.47-2.43-1.499-.898-.8-1.503-1.79-1.679-2.09-.175-.3-.019-.462.13-.611.135-.135.302-.35.454-.525.151-.175.202-.3.302-.5.1-.2.05-.375-.025-.525-.075-.15-.676-1.628-.926-2.228-.243-.584-.489-.505-.676-.515-.175-.01-.375-.01-.575-.01-.2 0-.526.075-.802.375-.275.3-1.053 1.028-1.053 2.507s1.077 2.903 1.227 3.102c.15.2 2.119 3.235 5.132 4.532.716.309 1.275.493 1.71.632.72.228 1.375.196 1.893.118.577-.087 1.78-.727 2.03-1.428.25-.7.25-1.3.175-1.428-.075-.125-.275-.2-.577-.35z"/>
+    </svg>
+  </a>
+
+  <!-- ====================================================
+       CALCULATOR JAVASCRIPT — ALL LOGIC INLINE
+       ==================================================== -->
+  <script>
+    // Scroll reveal for cards
+    document.addEventListener('DOMContentLoaded', () => {
+      const cards = document.querySelectorAll('.calc-card');
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('revealed');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+      cards.forEach(card => io.observe(card));
+    });
+  </script>
+
+  <script src="app.js"></script>
+</body>
+</html>
